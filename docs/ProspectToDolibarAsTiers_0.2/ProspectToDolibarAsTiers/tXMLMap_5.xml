@@ -1,0 +1,121 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<externalNode i18n.job.component.parameters="Component Parameters:" i18n.job.properties="Properties" i18n.job.values="Values" i18n.mapper.table.for="Mapper table for " i18n.mapper.table.properties="Mapper table Properties" i18n.job.name="Name" i18n.tmap.matching.mode="Matching-mode" i18n.mapper.table.isminimized="isMinimized" i18n.tmap.isreject="isReject" i18n.tmap.isrejectinnnerjoin="isRejectInnerJoin" i18n.tmap.isinnerjoin="isInnerJoin" i18n.tmap.expressionfilter="expressionFilter" i18n.mapper.table.metadata.entries="Metadata Table Entries" i18n.job.type="Type" i18n.mapper.table.expression="Expression" i18n.tmap.isnullable="isNullable" i18n.tmap.constraint.entries="Constraint Table Entries" name="tXMLMap_5">
+  <parameters>
+    <column name="Statistiques du tStatCatcher">false</column>
+    <column name="Garder l'ordre du document">false</column>
+    <column name="Afficher les informations">true</column>
+    <column name="Commentaire"><![CDATA[Fabrication d'un objet "Tiers" pour Dolibarr]]></column>
+    <column name="Utiliser une r&#232;gle de validation existante">false</column>
+  </parameters>
+  <mapperTable type="input">
+    <table name="row2" matching-mode="ALL_ROWS" lookup-mode="LOAD_ONCE" isMinimized="false" isInnerJoin="false" isPersistent="false" expressionFilter="null" activateExpressionFilter="false" activateCondensedTool="false" isReject="false" isRejectInnerJoin="false">
+      <metadataTableEntries>
+        <entry name="row2/
+website" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+query" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+name" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+source" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+category" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+address" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+url_source" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+email1" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+campaign" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+dtCreate" expression="" isNullable="true" type="Long"/>
+        <entry name="row2/
+dtTreatment" expression="" isNullable="true" type="Long"/>
+        <entry name="row2/
+lang" expression="" isNullable="true" type="String"/>
+        <entry name="row2/
+CRC" expression="" isNullable="true" type="Long"/>
+      </metadataTableEntries>
+    </table>
+  </mapperTable>
+  <mapperTable type="output">
+    <table name="copyOfout" isMinimized="false" isReject="false" isRejectInnerJoin="false" expressionFilter="null" activateExpressionFilter="false" activateCondensedTool="false" isInnerJoin="false" isPersistent="false">
+      <metadataTableEntries>
+        <entry name="copyOfout/
+body" expression="" isNullable="false" type="Document"/>
+        <entry name="copyOfout.body:/
+root" expression="" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+name" expression=" row2.name" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+email" expression="Tools.emailFilter(row2.email1)" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+url" expression="row2.website" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+address" expression="row2.address.split(&quot;Voir sur&quot;)[0]" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+ref_ext" expression="row2.CRC" isNullable="true" type="Long"/>
+        <entry name="copyOfout.body:/
+root/
+note_private" expression="row2.category.split(&quot; - &quot;)[0]+&quot;;&quot;+row2.lang+&quot;;&quot;+row2.source" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+client" expression="Var.client" isNullable="true" type=""/>
+        <entry name="copyOfout.body:/
+root/
+prospect" expression="Var.prospect" isNullable="true" type=""/>
+        <entry name="copyOfout.body:/
+root/
+lang" expression="row2.lang" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+typent_code" expression="Var.typent_code" isNullable="true" type=""/>
+        <entry name="copyOfout.body:/
+root/
+code_client" expression="&quot;Client&quot;+row2.CRC" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+forme_juridique" expression="&quot;Commer&#231;ant (EI)&quot;" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+country_code" expression="row2.lang.toUpperCase() " isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+country" expression="Tools.getCountry(row2.lang) " isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+facebook" expression="Tools.facebookFilter(row2.website)" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+fk_prospectlevel" expression="&quot;PL_LOW&quot;" isNullable="true" type="String"/>
+        <entry name="copyOfout.body:/
+root/
+statut_commercial" expression="&quot;To contact&quot;" isNullable="true" type="String"/>
+        <entry name="copyOfout/
+email" expression="row2.email1" isNullable="true" type="String"/>
+        <entry name="copyOfout/
+category" expression="row2.category" isNullable="true" type="String"/>
+        <entry name="copyOfout/
+source" expression="row2.source" isNullable="true" type="String"/>
+        <entry name="copyOfout/
+lang" expression="row2.lang" isNullable="true" type="String"/>
+      </metadataTableEntries>
+    </table>
+  </mapperTable>
+  <mapperTable type="var">
+    <table name="Var" isMinimized="false" isReject="false" isRejectInnerJoin="false" isInnerJoin="false" isPersistent="false">
+      <metadataTableEntries>
+        <entry name="client" expression="&quot;2&quot;" isNullable="false" type="String"/>
+        <entry name="prospect" expression="&quot;0&quot;" isNullable="false" type="String"/>
+        <entry name="typent_code" expression="&quot;TE_MEDIUM&quot;" isNullable="false" type="String"/>
+      </metadataTableEntries>
+    </table>
+  </mapperTable>
+</externalNode>

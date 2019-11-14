@@ -1,0 +1,67 @@
+<h1 id="talendtodolibarr">TalendToDolibarr</h1>
+<p>Ce projet illustre la mise en oeuvre d&#39;un ETL pour alimenter et manipuler les données<br>du CRM Dolibarr.</p>
+<p>Pour la présentation des outils, on peut se référer aux pages web les concernants</p>
+<ul>
+<li>Dolibarr : <a href="https://www.dolibarr.fr/">https://www.dolibarr.fr/</a></li>
+<li>Talend : <a href="https://fr.talend.com/products/data-integration/data-integration-open-studio/">https://fr.talend.com/products/data-integration/data-integration-open-studio/</a></li>
+</ul>
+<h1 id="objectifs">Objectifs</h1>
+<p>Dolibarr est un CRM gratuit et open source relativement complet. Pour autant, il n&#39;est pas aussi<br>complet que d&#39;autres sur </p>
+<ul>
+<li>l&#39;importation de données issue de bases externes : <a href="https://wiki.dolibarr.org/index.php/Module_Imports">https://wiki.dolibarr.org/index.php/Module_Imports</a></li>
+<li>la gestion de lots en interraction avec le système de taggage notamment pour faire des mailing : <a href="https://wiki.dolibarr.org/index.php/Module_Mailing">https://wiki.dolibarr.org/index.php/Module_Mailing</a></li>
+</ul>
+<p>Ainsi grâce à l&#39;ETL Talend, nous allons illustrer dans cet article, la mise en oeuvre d&#39;un projet de mailling de<br>masse à un ensemble de prospect importés d&#39;une base SQL dans Dolibarr</p>
+<p>Le processus va être décomposé en 4 tâches</p>
+<ul>
+<li>importer une liste d&#39;adresse mail dans Dolibarr sous forme de Tiers,</li>
+<li>tagger les tiers importés suivant une information présente dans la base,</li>
+<li>utiliser les tags des tiers pour constituer une mailing list</li>
+<li>après envoi du mail, changer le statut de communication des tiers contacté</li>
+</ul>
+<p>L&#39;ensemble du code est disponible sur le dépôt github : <a href="https://github.com/f80dev/TalendToDolibarr">https://github.com/f80dev/TalendToDolibarr</a></p>
+<h1 id="notation">Notation</h1>
+<p>Dans la suite de l&#39;article on utilise :</p>
+<ul>
+<li>&lt;serveur_dolibarr&gt; pour désigner l&#39;adresse de votre serveur hébergeant dolibarr</li>
+</ul>
+<h1 id="fabrication-des-jobs">Fabrication des jobs</h1>
+<p>Sous l&#39;Open Data Studio de Talend, les différents processus se retrouvent sous forme de &quot;Job&quot;. Ainsi pour chacunes<br>des tâches décrites précédemment on va faire correspondre un job.</p>
+<p>Chaque job met en oeuvre un workflow de composants. Ainsi on aura toujours un ou plusieurs composants représentant :</p>
+<ul>
+<li>la source des données</li>
+<li>le résultat final (qui peut être un traitement, un fichier ...)</li>
+<li>des étapes intermédiaires de transformation des données</li>
+</ul>
+<p>Pour communiquer avec Dolibarr on utilise le composant tRest qui permet d&#39;utiliser depuis Talend les API<br>mises à disposition par Dolibarr</p>
+<h1 id="communication-talend-dolibarr">Communication Talend &lt;=&gt; Dolibarr</h1>
+<p>La communication entre les deux outils est possible grâce à l&#39;usage des API dolibarr.<br>Nous n&#39;utilisons qu&#39;un petit nombre d&#39;API pour réaliser notre projet.<br>L&#39;ensemble des API est disponible à l&#39;adresse : http://&lt;serveur_dolibar&gt;/dolibarr/api/index.php/explorer/#/</p>
+<p>Les API vont manipuler 2 principaux types d&#39;objets qui vont être fabriquer par l&#39;ETL (via le composant tXMLMap)<br>avant d&#39;être injecté via<br>les modules tRest : </p>
+<ul>
+<li>Les &quot;categories&quot; (étiquettes applicable aux objets de Dolibarr) : <a href="https://wiki.dolibarr.org/index.php/Module_Cat%C3%A9gories">https://wiki.dolibarr.org/index.php/Module_Cat%C3%A9gories</a></li>
+<li>les &quot;thirdparties&quot; correspondant aux tiers : <a href="https://wiki.dolibarr.org/index.php/Module_Third_Parties">https://wiki.dolibarr.org/index.php/Module_Third_Parties</a></li>
+</ul>
+<p>###L&#39;objet &quot;thirdpartie&quot;<br>Pour créer un objet &quot;Thirpartie&quot; on initialise certains champs. On détaille<br>ci-dessous les plus importants (pour les autres il suffit de consulter la documentation du job)</p>
+<ul>
+<li>name : nom du tiers</li>
+<li>email : adresse email du tiers</li>
+<li>website : adresse internet rattaché au tiers</li>
+<li>address : adresse postale du tiers</li>
+<li>ref_ext : sera une référence de notre tiers construite sur une clé unique pour éviter les doublons</li>
+<li>prospect : initialisé à 0 car nos tiers sont tous des prospects à l&#39;importation</li>
+<li>facebook : contient l&#39;url de la page facebook du tiers</li>
+<li>note_private : va être utiliser comme tampon temporaire pour inscrire certaines informations présentent<br>dans la base qui seront converties en &quot;tag&quot; dans le job suivant</li>
+<li>statut_commercial : initialisé à &quot;To contact&quot; puisque l&#39;objectif est de faire un mailing</li>
+</ul>
+<p>###L&#39;objet &quot;categorie&quot; :</p>
+<ul>
+<li>label : contient le nom de la catégorie</li>
+<li>color : va permettre de lui donner une couleur particulière, cela peut être utile lorsque le nombre de catégorie devient<br>important</li>
+<li>type : initialisé à 2 pour dire que la catégorie s&#39;applique à nos clients (et non aux fournisseurs)</li>
+<li>ref : pour la référence de l&#39;objet on utilise son nom (permettant ainsi d&#39;éviter les doublons)</li>
+<li>fk_parent : initialisé à 0 car nos catégorie non pas d&#39;antécédent</li>
+</ul>
+<h1 id="d-tail-des-jobs">Détail des jobs</h1>
+<ul>
+<li>importation des tiers comme prospect :<br><a href="https://talendtodolibarr.f80.fr/ProspectToDolibarAsTiers_0.2/ProspectToDolibarAsTiers/ProspectToDolibarAsTiers_0.2.html">https://talendtodolibarr.f80.fr/ProspectToDolibarAsTiers_0.2/ProspectToDolibarAsTiers/ProspectToDolibarAsTiers_0.2.html</a></li>
+</ul>

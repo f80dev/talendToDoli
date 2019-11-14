@@ -1,0 +1,83 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<externalNode i18n.job.component.parameters="Component Parameters:" i18n.job.properties="Properties" i18n.job.values="Values" i18n.mapper.table.for="Mapper table for " i18n.mapper.table.properties="Mapper table Properties" i18n.job.name="Name" i18n.tmap.matching.mode="Matching-mode" i18n.mapper.table.isminimized="isMinimized" i18n.tmap.isreject="isReject" i18n.tmap.isrejectinnnerjoin="isRejectInnerJoin" i18n.tmap.isinnerjoin="isInnerJoin" i18n.tmap.expressionfilter="expressionFilter" i18n.mapper.table.metadata.entries="Metadata Table Entries" i18n.job.type="Type" i18n.mapper.table.expression="Expression" i18n.tmap.isnullable="isNullable" i18n.tmap.constraint.entries="Constraint Table Entries" name="tXMLMap_2">
+  <parameters>
+    <column name="Statistiques du tStatCatcher">false</column>
+    <column name="Garder l'ordre du document">false</column>
+    <column name="Afficher les informations">true</column>
+    <column name="Commentaire"><![CDATA[Fabrication d'un Tag pour Dolibarr]]></column>
+    <column name="Utiliser une r&#232;gle de validation existante">false</column>
+  </parameters>
+  <mapperTable type="input">
+    <table name="row9" matching-mode="ALL_ROWS" lookup-mode="LOAD_ONCE" isMinimized="false" isInnerJoin="false" isPersistent="false" expressionFilter="null" activateExpressionFilter="false" activateCondensedTool="false" isReject="false" isRejectInnerJoin="false">
+      <metadataTableEntries>
+        <entry name="row9/
+website" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+query" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+name" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+source" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+category" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+address" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+url_source" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+email1" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+campaign" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+dtCreate" expression="" isNullable="true" type="Long"/>
+        <entry name="row9/
+dtTreatment" expression="" isNullable="true" type="Long"/>
+        <entry name="row9/
+lang" expression="" isNullable="true" type="String"/>
+        <entry name="row9/
+CRC" expression="" isNullable="true" type="Long"/>
+      </metadataTableEntries>
+    </table>
+  </mapperTable>
+  <mapperTable type="output">
+    <table name="out6" isMinimized="false" isReject="false" isRejectInnerJoin="false" expressionFilter="null" activateExpressionFilter="false" activateCondensedTool="false" isInnerJoin="false" isPersistent="false">
+      <metadataTableEntries>
+        <entry name="out6/
+body" expression="" isNullable="false" type="Document"/>
+        <entry name="out6.body:/
+root" expression="" isNullable="true" type="String"/>
+        <entry name="out6.body:/
+root/
+label" expression=" Var.label" isNullable="true" type="String"/>
+        <entry name="out6.body:/
+root/
+color" expression="Var.color" isNullable="true" type=""/>
+        <entry name="out6.body:/
+root/
+type" expression="Var.type" isNullable="true" type=""/>
+        <entry name="out6.body:/
+root/
+fk_parent" expression="Var.fk_parent" isNullable="true" type=""/>
+        <entry name="out6.body:/
+root/
+ref" expression=" Var.label" isNullable="true" type="String"/>
+        <entry name="out6.body:/
+root/
+ref_ext" expression=" Var.label" isNullable="true" type="String"/>
+        <entry name="out6/
+label" expression=" Var.label" isNullable="true" type="String"/>
+      </metadataTableEntries>
+    </table>
+  </mapperTable>
+  <mapperTable type="var">
+    <table name="Var" isMinimized="false" isReject="false" isRejectInnerJoin="false" isInnerJoin="false" isPersistent="false">
+      <metadataTableEntries>
+        <entry name="color" expression="&quot;aaff56&quot;" isNullable="false" type="String"/>
+        <entry name="type" expression="&quot;2&quot;" isNullable="false" type="String"/>
+        <entry name="fk_parent" expression="&quot;0&quot;" isNullable="false" type="String"/>
+        <entry name="label" expression="row9.category.split(&quot; - &quot;)[0]" isNullable="false" type="String"/>
+      </metadataTableEntries>
+    </table>
+  </mapperTable>
+</externalNode>

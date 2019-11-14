@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<externalNode i18n.job.component.parameters="Component Parameters:" i18n.job.properties="Properties" i18n.job.values="Values" i18n.mapper.table.for="Mapper table for " i18n.mapper.table.properties="Mapper table Properties" i18n.job.name="Name" i18n.tmap.matching.mode="Matching-mode" i18n.mapper.table.isminimized="isMinimized" i18n.tmap.isreject="isReject" i18n.tmap.isrejectinnnerjoin="isRejectInnerJoin" i18n.tmap.isinnerjoin="isInnerJoin" i18n.tmap.expressionfilter="expressionFilter" i18n.mapper.table.metadata.entries="Metadata Table Entries" i18n.job.type="Type" i18n.mapper.table.expression="Expression" i18n.tmap.isnullable="isNullable" i18n.tmap.constraint.entries="Constraint Table Entries" name="tXMLMap_2">
+  <parameters>
+    <column name="Statistiques du tStatCatcher">false</column>
+    <column name="Garder l'ordre du document">false</column>
+    <column name="Afficher les informations">true</column>
+    <column name="Commentaire"><![CDATA[Extraire l'identifiant de la réponse à l'API]]></column>
+    <column name="Utiliser une r&#232;gle de validation existante">false</column>
+  </parameters>
+  <mapperTable type="input">
+    <table name="row4" matching-mode="ALL_ROWS" lookup-mode="LOAD_ONCE" isMinimized="false" isInnerJoin="false" isPersistent="false" expressionFilter="null" activateExpressionFilter="false" activateCondensedTool="false" isReject="false" isRejectInnerJoin="false">
+      <metadataTableEntries>
+        <entry name="row4/
+string" expression="" isNullable="true" type="String"/>
+        <entry name="row4/
+statusCode" expression="" isNullable="true" type="Integer"/>
+        <entry name="row4/
+body" expression="" isNullable="true" type="Document"/>
+        <entry name="row4.body:/
+response" expression="" isNullable="true" type="String"/>
+        <entry name="row4.body:/
+response/
+text" expression="" isNullable="true" type="String"/>
+      </metadataTableEntries>
+    </table>
+  </mapperTable>
+  <mapperTable type="output">
+    <table name="out12" isMinimized="false" isReject="false" isRejectInnerJoin="false" expressionFilter="null" activateExpressionFilter="false" activateCondensedTool="false" isInnerJoin="false" isPersistent="false">
+      <metadataTableEntries>
+        <entry name="out12/
+id" expression="[row4.body:/
+response/
+text]" isNullable="true" type="String"/>
+      </metadataTableEntries>
+    </table>
+    <table name="screen" isMinimized="false" isReject="false" isRejectInnerJoin="false" expressionFilter="null" activateExpressionFilter="false" activateCondensedTool="false" isInnerJoin="false" isPersistent="false">
+      <metadataTableEntries>
+        <entry name="screen/
+text" expression="[row4.body:/
+response/
+text]" isNullable="true" type="String"/>
+      </metadataTableEntries>
+    </table>
+  </mapperTable>
+  <mapperTable type="var">
+    <table name="Var" isMinimized="true" isReject="false" isRejectInnerJoin="false" isInnerJoin="false" isPersistent="false"/>
+  </mapperTable>
+</externalNode>
